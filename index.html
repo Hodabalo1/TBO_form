@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Questionnaire TBO – ASECNA / EAMAC</title>
+
+  <!-- Chart.js pour graphiques -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Minimal, propre et responsive */
+    *{box-sizing:border-box}
+    body{margin:0;font-family: "Segoe UI", Tahoma, Arial, sans-serif;background:linear-gradient(180deg,#f5f8fc,#eef6ff);color:#0b2b4a}
+    header{display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:3px solid #004b8d;padding:12px 18px;gap:12px}
+    .logo-left img,.logo-right img{height:72px;width:auto;display:block}
+    .header-center{text-align:center;flex:1}
+    .project-title{font-weight:800;color:#003e78;font-size:18px;margin:0}
+    .project-sub{font-size:12px;color:#315573;margin:2px 0 0}
+    main{max-width:1100px;margin:18px auto;padding:12px}
+    .card{background:#fff;border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 8px 24px rgba(15,30,60,0.06)}
+    label{display:block;margin-top:10px;font-weight:600}
+    select,textarea,input[type="text"]{width:100%;padding:10px;border-radius:8px;border:1px solid #cbd7ea;background:#fff;margin-top:6px;font-size:14px}
+    button{padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    .btn-primary{background:#0a6cf1;color:#fff}
+    .btn-ghost{background:transparent;border:1px solid #cfddea;color:#234567}
+    .muted{color:#556b81;font-size:13px}
+    .grid-2{display:grid;grid-template-columns:1fr 360px;gap:14px}
+    @media(max-width:1000px){.grid-2{grid-template-columns:1fr}.logo-left img,.logo-right img{height:58px}}
+    .question-block{margin-top:12px;padding:12px;border-radius:8px;background:#fbfdff;border:1px solid #eef5ff}
+    .q-title{font-weight:700;margin-bottom:8px;color:#023b6a}
+    .options{display:flex;gap:10px;flex-wrap:wrap}
+    .option{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;background:#fff;border:1px solid #dbeafc;cursor:pointer}
+    .radio-inline{display:inline-flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:#fff;border:1px solid #e6f0ff;cursor:pointer}
+    .option input,.radio-inline input{cursor:pointer}
+    .option.selected,.radio-inline.selected{background:linear-gradient(180deg,#e8f2ff,#dff0ff);border-color:#90c1ff;box-shadow:0 2px 6px rgba(30,80,140,0.06)}
+    .info{display:inline-block;margin-left:8px;color:#0056b3;border-radius:50%;width:20px;height:20px;line-height:18px;text-align:center;border:1px solid #cfe6ff;background:#f6fbff;font-size:12px;position:relative}
+    .info:hover::after{content:attr(data-tip);position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 10px);background:#0b2b4a;color:#fff;padding:8px 10px;border-radius:6px;white-space:pre-line;font-size:13px;max-width:320px;z-index:60;box-shadow:0 6px 20px rgba(10,30,80,0.25)}
+    .hidden{display:none}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:8px 10px;border-bottom:1px solid #eef4ff;text-align:left}
+    th{background:#f8fbff;position:sticky;top:0}
+    .obs{min-height:80px;resize:vertical}
+  </style>
+</head>
+<body>
+
+  <!-- Header with logos -->
+  <header>
+    <!-- IMPORTANT: place asecn-logo.png and logo_eamac.png in the same folder as index.html -->
+    <div class="logo-left"><img src="asecna-logo.png" alt="ASECNA logo" /></div>
+
+    <div class="header-center">
+      <div class="project-title">Questionnaire sur l'implémentation et la familiarité avec le TBO</div>
+      <div class="project-sub">ASECNA &mdash; EAMAC — Personnel opérationnel & pilotes</div>
+    </div>
+
+    <div class="logo-right"><img src="logo_eamac.png" alt="EAMAC logo" /></div>
+  </header>
+
+  <main class="main">
+    <!-- Accueil -->
+    <section class="card" id="accueil">
+      <div class="grid-2">
+        <div>
+          <h2>Bienvenue</h2>
+          <p class="muted">
+            Ce questionnaire vise à mesurer le niveau d'implémentation et la familiarité des personnels opérationnels de l'ASECNA et des pilotes
+            avec le concept Trajectory-Based Operations (TBO). Les résultats permettront d'orienter les formations, équipements et la feuille de route régionale.
+          </p>
+
+          <div style="margin-top:10px;">
+            <strong>Échelle de réponse (Likert)</strong>
+            <div class="muted">1 = Non implémenté &nbsp; | &nbsp; 2 = En cours &nbsp; | &nbsp; 3 = Implémenté et opérationnel</div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <strong>Glossaire rapide (survolez les sigles pour plus d'infos)</strong>
+            <ul style="margin:8px 0 0 16px; color:#345a78;">
+              <li><strong>STCA</strong> <span class="info" data-tip="STCA = Short Term Conflict Alert\nAlerte automatique de conflit à court terme entre deux trajectoires.">i</span></li>
+              <li><strong>FF-ICE</strong> <span class="info" data-tip="FF-ICE = Flight and Flow Information for a Collaborative Environment\nStandard pour le partage d'informations de vol et de flux.">i</span></li>
+              <li><strong>SWIM</strong> <span class="info" data-tip="SWIM = System Wide Information Management\nCadre pour l'échange standardisé et sécurisé des informations aéronautiques.">i</span></li>
+              <li><strong>AMAN</strong> <span class="info" data-tip="AMAN = Arrival Manager\nOutil d'optimisation et séquencement des arrivées en terminal.">i</span></li>
+              <li><strong>FRA</strong> <span class="info" data-tip="FRA = Free Route Airspace\nEspace aérien permettant des routings directs entre points définis.">i</span></li>
+              <li><strong>AIDC</strong> <span class="info" data-tip="AIDC = ATS Interfacility Data Communication\nProtocole d'échange de messages entre centres ATS.">i</span></li>
+              <li><strong>A-FUA</strong> <span class="info" data-tip="A-FUA = Advanced Flexible Use of Airspace\nApproche avancée de gestion flexible de l'espace aérien.">i</span></li>
+              <li><strong>PBN / RNP AR</strong> <span class="info" data-tip="PBN = Performance-Based Navigation\nRNP AR = Required Navigation Performance Authorization Required (approches avancées).">i</span></li>
+              <li><strong>TTOT</strong> <span class="info" data-tip="TTOT = Target Take-Off Time\nHeure de décollage cible pour un vol (ATFM).">i</span></li>
+              <li><strong>CTOT</strong> <span class="info" data-tip="CTOT = Calculated Take-Off Time\nHeure de décollage calculée/assignée par ATFM.">i</span></li>
+              <li><strong>TTA</strong> <span class="info" data-tip="TTA = Target Time of Arrival\nHeure cible d'arrivée pour un vol (ATFM).">i</span></li>
+              <li><strong>ETA / ATA</strong> <span class="info" data-tip="ETA = Estimated Time of Arrival (estimation)\nATA = Actual Time of Arrival (heure réelle d'arrivée).">i</span></li>
+              <li><strong>AIXM</strong> <span class="info" data-tip="AIXM = Aeronautical Information Exchange Model\nModèle standard pour l'échange d'informations aéronautiques (e-AIP...).">i</span></li>
+              <li><strong>FIXM</strong> <span class="info" data-tip="FIXM = Flight Information Exchange Model\nModèle pour l'échange d'informations de vol entre systèmes.">i</span></li>
+              <li><strong>IWXXM</strong> <span class="info" data-tip="IWXXM = ICAO Weather Information Exchange Model\nModèle standard pour l'échange des messages météorologiques (SIGMET, METAR/TAF...).">i</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <label for="country">Pays <span style="color:#b33">*</span></label>
+          <select id="country" aria-label="Pays">
+            <option value="">-- Sélectionnez votre pays --</option>
+            <option value="Bénin">Bénin</option>
+            <option value="Burkina Faso">Burkina Faso</option>
+            <option value="Cameroun">Cameroun</option>
+            <option value="Centrafrique">Centrafrique</option>
+            <option value="Congo">Congo</option>
+            <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+            <option value="Gabon">Gabon</option>
+            <option value="Guinée">Guinée</option>
+            <option value="Guinée-Bissau">Guinée-Bissau</option>
+            <option value="Guinée Équatoriale">Guinée Équatoriale</option>
+            <option value="Madagascar">Madagascar</option>
+            <option value="Mali">Mali</option>
+            <option value="Mauritanie">Mauritanie</option>
+            <option value="Niger">Niger</option>
+            <option value="Rwanda">Rwanda</option>
+            <option value="Sénégal">Sénégal</option>
+            <option value="Tchad">Tchad</option>
+            <option value="Togo">Togo</option>
+            <option value="Union des Comores">Union des Comores</option>
+          </select>
+
+          <label for="role">Fonction <span style="color:#b33">*</span></label>
+          <select id="role" aria-label="Fonction">
+            <option value="">-- Sélectionnez votre fonction --</option>
+            <option value="ATC">Contrôleur aérien (ATC)</option>
+            <option value="ATFM">Chef UQUIP (ATFM)</option>
+            <option value="AIM">Chef AIM</option>
+            <option value="CNS">Chef CNS</option>
+            <option value="Pilote">Pilote</option>
+          </select>
+
+          <div class="muted" style="margin-top:10px;">Après sélection, cliquez sur <strong>Commencer</strong> pour afficher uniquement le questionnaire lié à votre fonction.</div>
+
+          <div class="btn-row" style="margin-top:10px;display:flex;gap:10px;">
+            <button id="startBtn" class="btn-primary" disabled>Commencer</button>
+            <button id="adminLink" class="btn-ghost">Espace administrateur</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Questionnaire container -->
+    <section id="questionnaire" class="card hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div id="headingRole" style="font-weight:800;color:#023b6a;font-size:16px">Questionnaire</div>
+          <div class="muted" id="subHeading"></div>
+        </div>
+        <div class="muted">Échelle : 1 = Non implémenté | 2 = En cours | 3 = Implémenté et opérationnel</div>
+      </div>
+
+      <!-- ---- ATC ---- -->
+      <div id="form-ATC" class="question-block hidden" data-func="ATC">
+        <div style="font-weight:700;color:#003e78">Contrôleur aérien (ATC)</div>
+
+        <!-- Q1 Experience -->
+        <div class="q-title">1. Expérience professionnelle dans le domaine aéronautique :</div>
+        <div class="options" role="group" aria-label="Expérience ATC">
+          <label class="option"><input type="radio" name="atc_exp" value="Moins de 5 ans">Moins de 5 ans</label>
+          <label class="option"><input type="radio" name="atc_exp" value="5 à 10 ans">5 à 10 ans</label>
+          <label class="option"><input type="radio" name="atc_exp" value="11 à 20 ans">11 à 20 ans</label>
+          <label class="option"><input type="radio" name="atc_exp" value="Plus de 20 ans">Plus de 20 ans</label>
+        </div>
+
+        <!-- Q2 Familiarity - extended choices as requested -->
+        <div class="q-title" style="margin-top:10px">2. À quel point êtes-vous familier avec le concept TBO (Trajectory-Based Operations) ?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="atc_fam" value="Pas du tout familier">Pas du tout familier - Je n'en ai jamais entendu parler</label>
+          <label class="option"><input type="radio" name="atc_fam" value="Peu familier">Peu familier - J'en ai entendu parler mais sans plus</label>
+          <label class="option"><input type="radio" name="atc_fam" value="Neutre">Neutre - Je connais le concept superficiellement</label>
+          <label class="option"><input type="radio" name="atc_fam" value="Assez familier">Assez familier - Je comprends les principes de base</label>
+          <label class="option"><input type="radio" name="atc_fam" value="Très familier">Très familier - Je maîtrise le concept en détail</label>
+        </div>
+
+        <!-- Technical Likert Q3-Q14 -->
+        <div style="margin-top:12px;">
+          <div class="q-title">3. STCA <span class="info" data-tip="STCA = Short Term Conflict Alert\nAlerte de conflit à court terme.">i</span></div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q3" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q3" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q3" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">4. Niveau d'implémentation du FF-ICE <span class="info" data-tip="FF-ICE = Flight and Flow Information for a Collaborative Environment\nStandard de partage d'information de vol.">i</span></div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q4" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q4" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q4" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">5. Free Route Airspace (FRA) <span class="info" data-tip="FRA = Free Route Airspace\nEspace aérien permettant des routings directs.">i</span></div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q5" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q5" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q5" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">6. Gestion flexible avancée (A-FUA) <span class="info" data-tip="A-FUA = Advanced Flexible Use of Airspace">i</span></div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q6" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q6" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q6" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">7. Sectorisation dynamique</div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q7" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q7" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q7" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">8. Outils avancés de prédiction (MTCD, MONA)</div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q8" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q8" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q8" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">9. AMAN <span class="info" data-tip="AMAN = Arrival Manager\nOutil de séquencement et optimisation des arrivées.">i</span></div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q9" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q9" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q9" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">10. Utilisation des heures cibles (TTOT, CTOT, TTA, ETA/ATA) <span class="info" data-tip="TTOT = Target Take-Off Time\nCTOT = Calculated Take-Off Time\nTTA = Target Time of Arrival\nETA = Estimated Time of Arrival\nATA = Actual Time of Arrival">i</span></div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q10" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q10" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q10" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">11. Procédures CDO/CCO basiques</div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q11" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q11" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q11" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">12. Procédures CDO/CCO avancées</div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q12" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q12" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q12" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">13. Approches PBN avancées (RNP AR) <span class="info" data-tip="PBN = Performance Based Navigation\nRNP AR = Approches nécessitant autorisation spécifique">i</span></div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q13" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q13" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q13" value="3">3</label></div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <div class="q-title">14. Partage de trajectoire 4D (TBO avancé)</div>
+          <div class="options"><label class="radio-inline"><input type="radio" name="atc_q14" value="1">1</label><label class="radio-inline"><input type="radio" name="atc_q14" value="2">2</label><label class="radio-inline"><input type="radio" name="atc_q14" value="3">3</label></div>
+        </div>
+
+        <!-- Observations libre -->
+        <div style="margin-top:12px;">
+          <div class="q-title">Observations (facultatif)</div>
+          <textarea name="atc_obs" id="atc_obs" class="obs" placeholder="Vos remarques, suggestions ou observations..."></textarea>
+        </div>
+      </div>
+
+      <!-- ---- ATFM (Chef UQUIP) ---- -->
+      <div id="form-ATFM" class="question-block hidden" data-func="ATFM">
+        <div style="font-weight:700;color:#003e78">Chef UQUIP (ATFM)</div>
+
+        <div class="q-title">1. Existe-t-il une feuille de route stratégique formalisée pour le TBO à l'ASECNA ?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="atfm_q1" value="Oui">Oui</label>
+          <label class="option"><input type="radio" name="atfm_q1" value="Partiellement">Partiellement</label>
+          <label class="option"><input type="radio" name="atfm_q1" value="Non">Non</label>
+        </div>
+
+        <div class="q-title" style="margin-top:8px">2. À quel point êtes-vous familier avec le concept TBO ?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="atfm_q2" value="Pas du tout familier">Pas du tout familier</label>
+          <label class="option"><input type="radio" name="atfm_q2" value="Peu familier">Peu familier</label>
+          <label class="option"><input type="radio" name="atfm_q2" value="Neutre">Neutre</label>
+          <label class="option"><input type="radio" name="atfm_q2" value="Assez familier">Assez familier</label>
+          <label class="option"><input type="radio" name="atfm_q2" value="Très familier">Très familier</label>
+        </div>
+
+        <div class="q-title" style="margin-top:8px">3. STCA</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="atfm_q3" value="1">1</label><label class="radio-inline"><input type="radio" name="atfm_q3" value="2">2</label><label class="radio-inline"><input type="radio" name="atfm_q3" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">4. Mise en place du C-ATFM</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="atfm_q4" value="1">1</label><label class="radio-inline"><input type="radio" name="atfm_q4" value="2">2</label><label class="radio-inline"><input type="radio" name="atfm_q4" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">5. Gestion flexible avancée (A-FUA)</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="atfm_q5" value="1">1</label><label class="radio-inline"><input type="radio" name="atfm_q5" value="2">2</label><label class="radio-inline"><input type="radio" name="atfm_q5" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">6. AMAN</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="atfm_q6" value="1">1</label><label class="radio-inline"><input type="radio" name="atfm_q6" value="2">2</label><label class="radio-inline"><input type="radio" name="atfm_q6" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">7. Utilisation des heures cibles</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="atfm_q7" value="1">1</label><label class="radio-inline"><input type="radio" name="atfm_q7" value="2">2</label><label class="radio-inline"><input type="radio" name="atfm_q7" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">8. Niveau de déploiement ASM/ATFM collaboratif</div>
+        <div class="options"><label class="option"><input type="radio" name="atfm_q8" value="Déployé">Déployé</label><label class="option"><input type="radio" name="atfm_q8" value="Partiel">Partiel</label><label class="option"><input type="radio" name="atfm_q8" value="Test">Test</label><label class="option"><input type="radio" name="atfm_q8" value="Non déployé">Non déployé</label></div>
+
+        <div class="q-title" style="margin-top:8px">9. Utilisation des Target Times (TTOT, CTOT, TTA) <span class="info" data-tip="TTOT = Target Take-Off Time\nCTOT = Calculated Take-Off Time\nTTA = Target Time of Arrival">i</span></div>
+        <div class="options"><label class="option"><input type="radio" name="atfm_q9" value="Très fréquente">Très fréquente</label><label class="option"><input type="radio" name="atfm_q9" value="Fréquente">Fréquente</label><label class="option"><input type="radio" name="atfm_q9" value="Rare">Rare</label><label class="option"><input type="radio" name="atfm_q9" value="Jamais">Jamais</label></div>
+
+        <div class="q-title" style="margin-top:8px">10. Importance de l'automatisation ATFM dans le TBO</div>
+        <div class="options"><label class="option"><input type="radio" name="atfm_q10" value="Très importante">Très importante</label><label class="option"><input type="radio" name="atfm_q10" value="Importante">Importante</label><label class="option"><input type="radio" name="atfm_q10" value="Peu importante">Peu importante</label><label class="option"><input type="radio" name="atfm_q10" value="Pas importante">Pas importante</label></div>
+
+        <div style="margin-top:12px;">
+          <div class="q-title">Observations (facultatif)</div>
+          <textarea name="atfm_obs" id="atfm_obs" class="obs" placeholder="Vos remarques..."></textarea>
+        </div>
+      </div>
+
+      <!-- ---- AIM ---- -->
+      <div id="form-AIM" class="question-block hidden" data-func="AIM">
+        <div style="font-weight:700;color:#003e78">Chef AIM</div>
+
+        <div class="q-title">1. Transition AIS → AIM numérique (e-AIP, AIXM) <span class="info" data-tip="AIXM = Aeronautical Information Exchange Model\nModèle d'échange d'informations aéronautiques.">i</span></div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="aim_q1" value="1">1</label><label class="radio-inline"><input type="radio" name="aim_q1" value="2">2</label><label class="radio-inline"><input type="radio" name="aim_q1" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">2. SWIM <span class="info" data-tip="SWIM = System Wide Information Management\nCadre pour l'échange d'informations entre acteurs.">i</span></div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="aim_q2" value="1">1</label><label class="radio-inline"><input type="radio" name="aim_q2" value="2">2</label><label class="radio-inline"><input type="radio" name="aim_q2" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">3. Partage de trajectoire 4D (TBO avancé)</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="aim_q3" value="1">1</label><label class="radio-inline"><input type="radio" name="aim_q3" value="2">2</label><label class="radio-inline"><input type="radio" name="aim_q3" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">4. Partage numérique des données de vol (SWIM, AIXM, FIXM, IWXXM) <span class="info" data-tip="FIXM = Flight Information Exchange Model\nIWXXM = ICAO Weather Information Exchange Model">i</span></div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="aim_q4" value="1">1</label><label class="radio-inline"><input type="radio" name="aim_q4" value="2">2</label><label class="radio-inline"><input type="radio" name="aim_q4" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">5. Existe-t-il une feuille de route stratégique formalisée pour le TBO à l'ASECNA ?</div>
+        <div class="options"><label class="option"><input type="radio" name="aim_q5" value="Oui">Oui</label><label class="option"><input type="radio" name="aim_q5" value="Partiellement">Partiellement</label><label class="option"><input type="radio" name="aim_q5" value="Non">Non</label></div>
+
+        <div class="q-title" style="margin-top:8px">6. À quel point êtes-vous familier avec le concept TBO ?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="aim_q6" value="Pas du tout familier">Pas du tout familier</label>
+          <label class="option"><input type="radio" name="aim_q6" value="Peu familier">Peu familier</label>
+          <label class="option"><input type="radio" name="aim_q6" value="Neutre">Neutre</label>
+          <label class="option"><input type="radio" name="aim_q6" value="Assez familier">Assez familier</label>
+          <label class="option"><input type="radio" name="aim_q6" value="Très familier">Très familier</label>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div class="q-title">Observations (facultatif)</div>
+          <textarea name="aim_obs" id="aim_obs" class="obs" placeholder="Vos remarques..."></textarea>
+        </div>
+      </div>
+
+      <!-- ---- CNS ---- -->
+      <div id="form-CNS" class="question-block hidden" data-func="CNS">
+        <div style="font-weight:700;color:#003e78">Chef CNS</div>
+
+        <div class="q-title">1. Déploiement progressif de l'AIDC</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="cns_q1" value="1">1</label><label class="radio-inline"><input type="radio" name="cns_q1" value="2">2</label><label class="radio-inline"><input type="radio" name="cns_q1" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">2. Réseau ATN/IPS (migration IP interconnexion ATS)</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="cns_q2" value="1">1</label><label class="radio-inline"><input type="radio" name="cns_q2" value="2">2</label><label class="radio-inline"><input type="radio" name="cns_q2" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">3. STCA</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="cns_q3" value="1">1</label><label class="radio-inline"><input type="radio" name="cns_q3" value="2">2</label><label class="radio-inline"><input type="radio" name="cns_q3" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">4. SWIM</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="cns_q4" value="1">1</label><label class="radio-inline"><input type="radio" name="cns_q4" value="2">2</label><label class="radio-inline"><input type="radio" name="cns_q4" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">5. Existe-t-il une feuille de route stratégique formalisée pour le TBO à l'ASECNA ?</div>
+        <div class="options"><label class="option"><input type="radio" name="cns_q5" value="Oui">Oui</label><label class="option"><input type="radio" name="cns_q5" value="Partiellement">Partiellement</label><label class="option"><input type="radio" name="cns_q5" value="Non">Non</label></div>
+
+        <div class="q-title" style="margin-top:8px">6. À quel point êtes-vous familier avec le concept TBO ?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="cns_q6" value="Pas du tout familier">Pas du tout familier</label>
+          <label class="option"><input type="radio" name="cns_q6" value="Peu familier">Peu familier</label>
+          <label class="option"><input type="radio" name="cns_q6" value="Neutre">Neutre</label>
+          <label class="option"><input type="radio" name="cns_q6" value="Assez familier">Assez familier</label>
+          <label class="option"><input type="radio" name="cns_q6" value="Très familier">Très familier</label>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div class="q-title">Observations (facultatif)</div>
+          <textarea name="cns_obs" id="cns_obs" class="obs" placeholder="Vos remarques..."></textarea>
+        </div>
+      </div>
+
+      <!-- ---- Pilote ---- -->
+      <div id="form-Pilote" class="question-block hidden" data-func="Pilote">
+        <div style="font-weight:700;color:#003e78">Pilote</div>
+
+        <div class="q-title">1. Expérience professionnelle dans le domaine aéronautique :</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="pilot_exp" value="Moins de 5 ans">Moins de 5 ans</label>
+          <label class="option"><input type="radio" name="pilot_exp" value="5 à 10 ans">5 à 10 ans</label>
+          <label class="option"><input type="radio" name="pilot_exp" value="11 à 20 ans">11 à 20 ans</label>
+          <label class="option"><input type="radio" name="pilot_exp" value="Plus de 20 ans">Plus de 20 ans</label>
+        </div>
+
+        <div class="q-title" style="margin-top:8px">2. À quel point êtes-vous familier avec le concept TBO ?</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="pilot_fam" value="Pas du tout familier">Pas du tout familier</label>
+          <label class="option"><input type="radio" name="pilot_fam" value="Peu familier">Peu familier</label>
+          <label class="option"><input type="radio" name="pilot_fam" value="Neutre">Neutre</label>
+          <label class="option"><input type="radio" name="pilot_fam" value="Assez familier">Assez familier</label>
+          <label class="option"><input type="radio" name="pilot_fam" value="Très familier">Très familier</label>
+        </div>
+
+        <div class="q-title" style="margin-top:8px">3. Niveau d'implémentation du FF-ICE</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="pilot_q3" value="1">1</label><label class="radio-inline"><input type="radio" name="pilot_q3" value="2">2</label><label class="radio-inline"><input type="radio" name="pilot_q3" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">4. Free Route Airspace (FRA)</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="pilot_q4" value="1">1</label><label class="radio-inline"><input type="radio" name="pilot_q4" value="2">2</label><label class="radio-inline"><input type="radio" name="pilot_q4" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">5. Utilisation des heures cibles (TTOT, CTOT, TTA, ETA/ATA) <span class="info" data-tip="TTOT = Target Take-Off Time\nCTOT = Calculated Take-Off Time\nTTA = Target Time of Arrival\nETA = Estimated Time of Arrival\nATA = Actual Time of Arrival">i</span></div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="pilot_q5" value="1">1</label><label class="radio-inline"><input type="radio" name="pilot_q5" value="2">2</label><label class="radio-inline"><input type="radio" name="pilot_q5" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">6. Procédures CDO/CCO basiques</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="pilot_q6" value="1">1</label><label class="radio-inline"><input type="radio" name="pilot_q6" value="2">2</label><label class="radio-inline"><input type="radio" name="pilot_q6" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">7. Procédures CDO/CCO avancées</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="pilot_q7" value="1">1</label><label class="radio-inline"><input type="radio" name="pilot_q7" value="2">2</label><label class="radio-inline"><input type="radio" name="pilot_q7" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">8. Approches PBN avancées (RNP AR)</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="pilot_q8" value="1">1</label><label class="radio-inline"><input type="radio" name="pilot_q8" value="2">2</label><label class="radio-inline"><input type="radio" name="pilot_q8" value="3">3</label></div>
+
+        <div class="q-title" style="margin-top:8px">9. Partage de trajectoire 4D (TBO avancé)</div>
+        <div class="options"><label class="radio-inline"><input type="radio" name="pilot_q9" value="1">1</label><label class="radio-inline"><input type="radio" name="pilot_q9" value="2">2</label><label class="radio-inline"><input type="radio" name="pilot_q9" value="3">3</label></div>
+
+        <div style="margin-top:12px;">
+          <div class="q-title">Observations (facultatif)</div>
+          <textarea name="pilot_obs" id="pilot_obs" class="obs" placeholder="Vos remarques..."></textarea>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div style="display:flex; justify-content:space-between; gap:12px; margin-top:14px;">
+        <button id="btnBack" class="btn-ghost">Retour</button>
+        <div style="display:flex;gap:10px;">
+          <button id="btnPreview" class="btn-ghost">Aperçu local</button>
+          <button id="btnSubmit" class="btn-primary">Soumettre</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin page -->
+    <section id="adminPage" class="card hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-weight:800;color:#003e78">Espace Administration</div>
+        <div class="muted">Accès protégé</div>
+      </div>
+
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button id="refreshAdmin" class="btn-ghost">Rafraîchir</button>
+        <button id="closeAdmin" class="btn-ghost">Retour</button>
+      </div>
+
+      <div style="margin-top:12px;"><strong>Total réponses :</strong> <span id="totalResponses">0</span></div>
+
+      <div style="margin-top:12px;" class="table-responsive">
+        <table id="tableResponses">
+          <thead><tr><th>Date</th><th>Pays</th><th>Fonction</th><th>Question</th><th>Réponse</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:12px;">
+        <canvas id="chartResponses" style="max-height:300px"></canvas>
+      </div>
+    </section>
+
+    <!-- Preview area -->
+    <div id="previewArea" class="card hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <strong>Aperçu local</strong>
+        <button id="closePreview" class="btn-ghost">Fermer</button>
+      </div>
+      <pre id="previewContent" style="white-space:pre-wrap;margin-top:10px;"></pre>
+    </div>
+
+    <div style="text-align:right;margin-top:8px;font-size:13px;">
+      <a href="#" id="adminFooterLink">Espace administration</a>
+    </div>
+  </main>
+
+  <script>
+    /*************************************************************************
+     * Single-file questionnaire (Google Sheets backend)
+     * Admin password: adminTBO2025
+     * Google Apps Script URL (doGet / doPost): set below
+     *************************************************************************/
+    const ADMIN_PWD = "adminTBO2025";
+    // <-- Ton endpoint Apps Script déployé (déjà fourni par toi)
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzj_W3fcnYmIPcWHHekeUKYisUJ4z014fOyhVPIZjVkXktCepvA979TScj2Q1eag4ms/exec";
+
+    // Elements
+    const countryEl = document.getElementById('country');
+    const roleEl = document.getElementById('role');
+    const startBtn = document.getElementById('startBtn');
+    const adminLink = document.getElementById('adminLink');
+    const adminFooterLink = document.getElementById('adminFooterLink');
+    const accueil = document.getElementById('accueil');
+    const questionnaire = document.getElementById('questionnaire');
+    const adminPage = document.getElementById('adminPage');
+    const previewArea = document.getElementById('previewArea');
+
+    const btnBack = document.getElementById('btnBack');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const btnPreview = document.getElementById('btnPreview');
+    const closePreview = document.getElementById('closePreview');
+
+    const tableBody = document.querySelector('#tableResponses tbody');
+    const totalResponsesEl = document.getElementById('totalResponses');
+    const chartCtx = document.getElementById('chartResponses').getContext ? document.getElementById('chartResponses').getContext('2d') : null;
+    let chartInstance = null;
+
+    // Enable start button only when country & role selected
+    function toggleStart() { startBtn.disabled = !(countryEl.value && roleEl.value); }
+    countryEl.addEventListener('change', toggleStart);
+    roleEl.addEventListener('change', toggleStart);
+
+    // Show only form for chosen role
+    function showFormForRole(role) {
+      document.querySelectorAll('[id^="form-"]').forEach(el => el.classList.add('hidden'));
+      const el = document.getElementById('form-' + role);
+      if (el) el.classList.remove('hidden');
+      document.getElementById('headingRole').textContent = `Questionnaire – ${roleEl.selectedOptions[0]?.text || ''}`;
+      document.getElementById('subHeading').textContent = `${countryEl.value} • ${roleEl.value}`;
+    }
+
+    // Start
+    startBtn.addEventListener('click', () => {
+      if (!countryEl.value || !roleEl.value) { alert('Sélectionnez votre pays et votre fonction.'); return; }
+      accueil.classList.add('hidden');
+      questionnaire.classList.remove('hidden');
+      showFormForRole(roleEl.value);
+      window.scrollTo({ top:0, behavior:'smooth' });
+    });
+
+    // Back
+    btnBack.addEventListener('click', () => {
+      questionnaire.classList.add('hidden');
+      accueil.classList.remove('hidden');
+      window.scrollTo({ top:0, behavior:'smooth' });
+    });
+
+    // Visual selection: clicking .option should check radio and mark selected
+    document.addEventListener('click', (e) => {
+      const opt = e.target.closest('.option');
+      if (opt) {
+        const input = opt.querySelector('input[type="radio"]');
+        if (input) {
+          input.checked = true;
+          const parent = opt.parentElement;
+          parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+        }
+      }
+      const rinline = e.target.closest('.radio-inline');
+      if (rinline) {
+        const input = rinline.querySelector('input[type="radio"]');
+        if (input) {
+          input.checked = true;
+          const parent = rinline.parentElement;
+          parent.querySelectorAll('.radio-inline').forEach(r => r.classList.remove('selected'));
+          rinline.classList.add('selected');
+        }
+      }
+    });
+
+    // Collect responses for visible form
+    function collect() {
+      const obj = {};
+      obj.timestamp = new Date().toISOString();
+      obj.pays = countryEl.value;
+      obj.fonction = roleEl.value;
+
+      const visible = document.querySelector('#form-' + roleEl.value);
+      if (!visible) return obj;
+
+      // collect all checked radios inside visible form
+      visible.querySelectorAll('input[type="radio"]').forEach(r => {
+        if (r.checked) obj[r.name] = r.value;
+      });
+
+      // observations (textarea) — include under 'observations' key
+      const obs = visible.querySelector('textarea');
+      if (obs) obj['observations'] = obs.value.trim();
+
+      return obj;
+    }
+
+    // Send to Google Apps Script (POST)
+    async function sendToSheet(data) {
+      try {
+        // Use mode:'no-cors' fallback if Apps Script doesn't set CORS headers — still sends the request but no JSON response.
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        // Note: when using no-cors the response is opaque — but the POST still reaches the script if it's publicly deployed.
+      } catch (err) {
+        console.error('Envoi vers Sheet échoué:', err);
+      }
+    }
+
+    // Submit handler
+    btnSubmit.addEventListener('click', async () => {
+      const data = collect();
+      // simple check: require at least familiarity answer
+      const reqMap = { 'ATC':'atc_fam', 'ATFM':'atfm_q2', 'AIM':'aim_q6', 'CNS':'cns_q6', 'Pilote':'pilot_fam' };
+      const req = reqMap[data.fonction];
+      if (req && !data[req]) {
+        if (!confirm('Certaines questions importantes semblent non répondues (ex : familiarité). Souhaitez-vous quand même soumettre ?')) return;
+      }
+
+      await sendToSheet(data);
+      alert('Merci — vos réponses ont été envoyées. (Centralisé sur Google Sheet)');
+      // reset visible form
+      const visible = document.querySelector('#form-' + roleEl.value);
+      if (visible) {
+        visible.querySelectorAll('input[type="radio"]').forEach(i => i.checked = false);
+        visible.querySelectorAll('.option, .radio-inline').forEach(el => el.classList.remove('selected'));
+        const ta = visible.querySelector('textarea');
+        if (ta) ta.value = '';
+      }
+      questionnaire.classList.add('hidden');
+      accueil.classList.remove('hidden');
+      window.scrollTo({ top:0, behavior:'smooth' });
+    });
+
+    // Preview local
+    btnPreview.addEventListener('click', () => {
+      const obj = collect();
+      document.getElementById('previewContent').textContent = JSON.stringify(obj, null, 2);
+      previewArea.classList.remove('hidden');
+      previewArea.scrollIntoView({ behavior:'smooth' });
+    });
+    closePreview.addEventListener('click', () => previewArea.classList.add('hidden'));
+
+    // Admin link: show prompt for password
+    function openAdmin() {
+      const pwd = prompt('Mot de passe administrateur :');
+      if (!pwd) return;
+      if (pwd !== ADMIN_PWD) { alert('Mot de passe incorrect.'); return; }
+      accueil.classList.add('hidden');
+      questionnaire.classList.add('hidden');
+      previewArea.classList.add('hidden');
+      adminPage.classList.remove('hidden');
+      loadFromSheet();
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }
+    adminLink.addEventListener('click', openAdmin);
+    adminFooterLink.addEventListener('click', (e) => { e.preventDefault(); openAdmin(); });
+
+    document.getElementById('closeAdmin').addEventListener('click', () => {
+      adminPage.classList.add('hidden');
+      accueil.classList.remove('hidden');
+    });
+
+    // Load responses from your Apps Script (doGet should return JSON array)
+    async function loadFromSheet() {
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const rows = await res.json(); // expecting array of {timestamp,pays,fonction,question,reponse,observations}
+        renderAdmin(rows);
+      } catch (err) {
+        console.error('Impossible de récupérer les données depuis le script :', err);
+        alert('Impossible de charger les réponses depuis Google Sheet. Vérifie que le script est bien déployé (Accès public).');
+      }
+    }
+
+    // Render admin table + chart
+    function renderAdmin(rows) {
+      tableBody.innerHTML = '';
+      if (!rows || !rows.length) {
+        totalResponsesEl.textContent = 0;
+        return;
+      }
+
+      rows.forEach(r => {
+        const tr = document.createElement('tr');
+        const dateCell = document.createElement('td'); dateCell.textContent = r.timestamp || '';
+        const paysCell = document.createElement('td'); paysCell.textContent = r.pays || '';
+        const funcCell = document.createElement('td'); funcCell.textContent = r.fonction || '';
+        const qCell = document.createElement('td'); qCell.textContent = r.question || '';
+        const rCell = document.createElement('td'); rCell.textContent = r.reponse || '';
+        tr.appendChild(dateCell); tr.appendChild(paysCell); tr.appendChild(funcCell); tr.appendChild(qCell); tr.appendChild(rCell);
+        tableBody.appendChild(tr);
+      });
+
+      totalResponsesEl.textContent = rows.length;
+
+      // Chart: responses by fonction
+      const counts = {};
+      rows.forEach(r => counts[r.fonction] = (counts[r.fonction] || 0) + 1);
+      const labels = Object.keys(counts);
+      const data = Object.values(counts);
+      if (chartInstance) chartInstance.destroy();
+      if (chartCtx) {
+        chartInstance = new Chart(chartCtx, {
+          type: 'bar',
+          data: { labels, datasets: [{ label: 'Réponses par fonction', data, backgroundColor: 'rgba(10,108,241,0.7)' }] },
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+      }
+    }
+
+    document.getElementById('refreshAdmin').addEventListener('click', loadFromSheet);
+
+    // On load: ensure start disabled
+    document.addEventListener('DOMContentLoaded', () => toggleStart());
+  </script>
+</body>
+</html>
