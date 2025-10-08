@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questionnaire sur l'implémentation du TBO – ASECNA / EAMAC</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f9ff;
+      color: #002b5c;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      background-color: white;
+      border-bottom: 3px solid #004b8d;
+    }
+
+    .logo {
+      background: linear-gradient(135deg, #0056b3, #003d82);
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 60px;
+      text-align: center;
+    }
+
+    .logo.eamac {
+      background: linear-gradient(135deg, #28a745, #1e7e34);
+    }
+
+    .logo-text {
+      font-weight: bold;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .logo-small {
+      font-size: 8px;
+      margin-top: 3px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #004b8d;
+      margin-top: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 600;
+    }
+
+    select, button, input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #004b8d;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #003366;
+    }
+
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .section {
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      background-color: #fafafa;
+    }
+
+    .question {
+      margin: 20px 0;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      background-color: white;
+      border-radius: 6px;
+    }
+
+    .question p {
+      margin: 0 0 12px;
+      font-weight: 600;
+      color: #004b8d;
+    }
+
+    .scale {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .scale label {
+      display: flex;
+      align-items: center;
+      padding: 8px 15px;
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+      flex: 1;
+      min-width: 120px;
+      justify-content: center;
+    }
+
+    .scale label:hover {
+      background: #e9ecef;
+    }
+
+    .scale input[type="radio"]:checked + span {
+      font-weight: bold;
+      color: #004b8d;
+    }
+
+    .scale input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    .submit-btn {
+      background-color: #0a6cf1;
+      color: white;
+      font-weight: bold;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 30px;
+      font-size: 1.1em;
+    }
+
+    .submit-btn:hover {
+      background-color: #004bb8;
+    }
+
+    .admin-link {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .admin-link a {
+      color: #666;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .admin-link a:hover {
+      text-decoration: underline;
+    }
+
+    .admin-panel {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    .admin-btn {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .admin-btn.secondary {
+      background-color: #6c757d;
+    }
+
+    .admin-btn.danger {
+      background-color: #dc3545;
+    }
+
+    .admin-btn:hover {
+      opacity: 0.9;
+    }
+
+    .admin-stats {
+      margin: 15px 0;
+      padding: 15px;
+      background: white;
+      border-radius: 4px;
+      border-left: 4px solid #004b8d;
+    }
+
+    .options-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      flex: 1;
+      min-width: 120px;
+      justify-content: center;
+    }
+
+    .option-item:hover {
+      background: #e9ecef;
+    }
+
+    .option-item.selected {
+      background-color: #004b8d;
+      color: white;
+      border-color: #004b8d;
+    }
+
+    .password-prompt {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 6px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+
+    .password-input {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .password-input input {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .password-input button {
+      width: auto;
+      margin-top: 0;
+    }
+
+    .back-btn {
+      background-color: #6c757d;
+      width: auto;
+      padding: 8px 20px;
+      margin-right: 10px;
+    }
+
+    .back-btn:hover {
+      background-color: #545b62;
+    }
+
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .function-badge {
+      display: inline-block;
+      background: #004b8d;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      margin-left: 10px;
+    }
+
+    .likert-info {
+      text-align: center;
+      background: #e7f3ff;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <div>
+        <div class="logo-text">ASECNA</div>
+        <div class="logo-small">AGENCE POUR LA SÉCURITÉ<br>DE LA NAVIGATION AÉRIENNE</div>
+      </div>
+    </div>
+    
+    <div class="logo eamac">
+      <div>
+        <div class="logo-text">EAMAC</div>
+        <div class="logo-small">ÉCOLE AFRICAINE<br>DE LA MÉTÉOROLOGIE<br>ET DE L'AVIATION CIVILE</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container" id="accueil">
+    <h1>Questionnaire sur l'implémentation et la familiarité avec le TBO</h1>
+    <p style="text-align:center; font-style:italic;">Merci de sélectionner votre pays et votre fonction pour commencer.</p>
+
+    <label for="pays">Pays :</label>
+    <select id="pays">
+      <option value="">-- Sélectionnez votre pays --</option>
+      <option>Bénin</option>
+      <option>Burkina Faso</option>
+      <option>Cameroun</option>
+      <option>Centrafrique</option>
+      <option>Congo</option>
+      <option>Côte d'Ivoire</option>
+      <option>Gabon</option>
+      <option>Guinée</option>
+      <option>Guinée-Bissau</option>
+      <option>Guinée Équatoriale</option>
+      <option>Madagascar</option>
+      <option>Mali</option>
+      <option>Mauritanie</option>
+      <option>Niger</option>
+      <option>Rwanda</option>
+      <option>Sénégal</option>
+      <option>Tchad</option>
+      <option>Togo</option>
+      <option>Union des Comores</option>
+    </select>
+
+    <label for="fonction">Fonction :</label>
+    <select id="fonction">
+      <option value="">-- Sélectionnez votre fonction --</option>
+      <option value="ATC">Contrôleur aérien (ATC)</option>
+      <option value="ATFM">Chef UQUIP (ATFM)</option>
+      <option value="AIM">Chef AIM</option>
+      <option value="CNS">Chef CNS</option>
+      <option value="Pilote">Pilote</option>
+    </select>
+
+    <button id="startBtn" disabled>Commencer le questionnaire</button>
+
+    <!-- Lien administrateur -->
+    <div class="admin-link">
+      <a href="#" onclick="showAdminPanel()">🔐 Accès Administrateur</a>
+    </div>
+
+    <!-- Panel administrateur caché -->
+    <div class="admin-panel hidden" id="adminPanel">
+      <h3>🔐 Panel d'Administration</h3>
+      <div class="password-prompt" id="passwordPrompt">
+        <p><strong>Accès restreint</strong> - Veuillez entrer le mot de passe administrateur :</p>
+        <div class="password-input">
+          <input type="password" id="adminPassword" placeholder="Mot de passe administrateur">
+          <button class="admin-btn" onclick="checkAdminPassword()">Accéder</button>
+        </div>
+      </div>
+      <div id="adminControls" class="hidden">
+        <div class="admin-actions">
+          <button class="admin-btn" onclick="downloadResponses()">📥 Télécharger CSV</button>
+          <button class="admin-btn secondary" onclick="downloadJSON()">📥 Télécharger JSON</button>
+          <button class="admin-btn danger" onclick="clearResponses()">🗑️ Effacer données</button>
+          <button class="admin-btn secondary" onclick="hideAdminPanel()">✕ Fermer</button>
+        </div>
+        <div class="admin-stats" id="adminStats">
+          <strong>📊 Statistiques :</strong> <span id="statsText">Chargement...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION ATC -->
+  <div class="container hidden" id="sectionATC">
+    <h1>Questionnaire Contrôleur Aérien (ATC) <span class="function-badge">ATC</span></h1>
+    <div class="likert-info">Échelle : 1 = Non implémenté | 2 = En cours | 3 = Implémenté et opérationnel</div>
+
+    <div class="question">
+      <p>1. Expérience professionnelle dans le domaine aéronautique :</p>
+      <div class="options-group" id="atc_experience">
+        <div class="option-item" data-value="Moins de 5 ans">Moins de 5 ans</div>
+        <div class="option-item" data-value="5 à 10 ans">5 à 10 ans</div>
+        <div class="option-item" data-value="11 à 20 ans">11 à 20 ans</div>
+        <div class="option-item" data-value="Plus de 20 ans">Plus de 20 ans</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>2. À quel point êtes-vous familier avec le concept TBO (Trajectory-Based Operations) ?</p>
+      <div class="options-group" id="atc_familiarite">
+        <div class="option-item" data-value="Très familier">Très familier</div>
+        <div class="option-item" data-value="Assez familier">Assez familier</div>
+        <div class="option-item" data-value="Peu familier">Peu familier</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>3. STCA (Short Term Conflict Alert)</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_stca" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_stca" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_stca" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>4. Niveau d'implémentation du FF-ICE</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_ffice" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_ffice" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_ffice" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>5. Free Route Airspace (FRA)</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_fra" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_fra" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_fra" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>6. Gestion flexible avancée (A-FUA)</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_afua" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_afua" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_afua" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>7. Sectorisation dynamique</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_sectorisation" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_sectorisation" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_sectorisation" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>8. Outils avancés de prédiction (MTCD, MONA)</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_prediction" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_prediction" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_prediction" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>9. AMAN (Arrival Manager)</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_aman" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_aman" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_aman" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>10. Utilisation des heures cibles</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_heures_cibles" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_heures_cibles" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_heures_cibles" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>11. Procédures CDO/CCO basiques</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_cdcco_basique" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_cdcco_basique" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_cdcco_basique" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>12. Procédures CDO/CCO avancées</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_cdcco_avance" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_cdcco_avance" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_cdcco_avance" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>13. Approches PBN avancées (RNP AR)</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_pbn_avance" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_pbn_avance" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_pbn_avance" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>14. Partage de trajectoire 4D (TBO avancé)</p>
+      <div class="scale">
+        <label><input type="radio" name="atc_trajectoire_4d" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atc_trajectoire_4d" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atc_trajectoire_4d" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <button class="back-btn" onclick="showSection('accueil')">← Retour</button>
+      <button class="submit-btn" onclick="submitQuestionnaire('ATC')">Soumettre le questionnaire</button>
+    </div>
+  </div>
+
+  <!-- SECTION ATFM -->
+  <div class="container hidden" id="sectionATFM">
+    <h1>Questionnaire Chef UQUIP (ATFM) <span class="function-badge">ATFM</span></h1>
+    <div class="likert-info">Échelle : 1 = Non implémenté | 2 = En cours | 3 = Implémenté et opérationnel</div>
+
+    <div class="question">
+      <p>1. Mise en place du C-ATFM</p>
+      <div class="scale">
+        <label><input type="radio" name="atfm_catfm" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atfm_catfm" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atfm_catfm" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>2. Gestion flexible avancée (A-FUA)</p>
+      <div class="scale">
+        <label><input type="radio" name="atfm_afua" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atfm_afua" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atfm_afua" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>3. AMAN (Arrival Manager)</p>
+      <div class="scale">
+        <label><input type="radio" name="atfm_aman" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atfm_aman" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atfm_aman" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>4. Utilisation des heures cibles</p>
+      <div class="scale">
+        <label><input type="radio" name="atfm_heures_cibles" value="1"> <span>1</span></label>
+        <label><input type="radio" name="atfm_heures_cibles" value="2"> <span>2</span></label>
+        <label><input type="radio" name="atfm_heures_cibles" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>5. Existe-t-il une feuille de route stratégique formalisée pour le TBO à l'ASECNA ?</p>
+      <div class="options-group" id="atfm_roadmap">
+        <div class="option-item" data-value="Oui">Oui</div>
+        <div class="option-item" data-value="Partiellement">Partiellement</div>
+        <div class="option-item" data-value="Non">Non</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>6. À quel point êtes-vous familier avec le concept TBO (Trajectory-Based Operations) ?</p>
+      <div class="options-group" id="atfm_familiarite">
+        <div class="option-item" data-value="Très familier">Très familier</div>
+        <div class="option-item" data-value="Assez familier">Assez familier</div>
+        <div class="option-item" data-value="Peu familier">Peu familier</div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <button class="back-btn" onclick="showSection('accueil')">← Retour</button>
+      <button class="submit-btn" onclick="submitQuestionnaire('ATFM')">Soumettre le questionnaire</button>
+    </div>
+  </div>
+
+  <!-- SECTION AIM -->
+  <div class="container hidden" id="sectionAIM">
+    <h1>Questionnaire Chef AIM <span class="function-badge">AIM</span></h1>
+    <div class="likert-info">Échelle : 1 = Non implémenté | 2 = En cours | 3 = Implémenté et opérationnel</div>
+
+    <div class="question">
+      <p>1. Transition AIS → AIM numérique (e-AIP, AIXM)</p>
+      <div class="scale">
+        <label><input type="radio" name="aim_transition" value="1"> <span>1</span></label>
+        <label><input type="radio" name="aim_transition" value="2"> <span>2</span></label>
+        <label><input type="radio" name="aim_transition" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>2. SWIM (System Wide Information Management)</p>
+      <div class="scale">
+        <label><input type="radio" name="aim_swim" value="1"> <span>1</span></label>
+        <label><input type="radio" name="aim_swim" value="2"> <span>2</span></label>
+        <label><input type="radio" name="aim_swim" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>3. Partage de trajectoire 4D (TBO avancé)</p>
+      <div class="scale">
+        <label><input type="radio" name="aim_trajectoire_4d" value="1"> <span>1</span></label>
+        <label><input type="radio" name="aim_trajectoire_4d" value="2"> <span>2</span></label>
+        <label><input type="radio" name="aim_trajectoire_4d" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>4. Le partage numérique des données de vol (SWIM, AIXM, FIXM, IWXXM) est-il déjà en place dans votre FIR ?</p>
+      <div class="scale">
+        <label><input type="radio" name="aim_partage_numerique" value="1"> <span>1</span></label>
+        <label><input type="radio" name="aim_partage_numerique" value="2"> <span>2</span></label>
+        <label><input type="radio" name="aim_partage_numerique" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>5. Existe-t-il une feuille de route stratégique formalisée pour le TBO à l'ASECNA ?</p>
+      <div class="options-group" id="aim_roadmap">
+        <div class="option-item" data-value="Oui">Oui</div>
+        <div class="option-item" data-value="Partiellement">Partiellement</div>
+        <div class="option-item" data-value="Non">Non</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>6. À quel point êtes-vous familier avec le concept TBO (Trajectory-Based Operations) ?</p>
+      <div class="options-group" id="aim_familiarite">
+        <div class="option-item" data-value="Très familier">Très familier</div>
+        <div class="option-item" data-value="Assez familier">Assez familier</div>
+        <div class="option-item" data-value="Peu familier">Peu familier</div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <button class="back-btn" onclick="showSection('accueil')">← Retour</button>
+      <button class="submit-btn" onclick="submitQuestionnaire('AIM')">Soumettre le questionnaire</button>
+    </div>
+  </div>
+
+  <!-- SECTION CNS -->
+  <div class="container hidden" id="sectionCNS">
+    <h1>Questionnaire Chef CNS <span class="function-badge">CNS</span></h1>
+    <div class="likert-info">Échelle : 1 = Non implémenté | 2 = En cours | 3 = Implémenté et opérationnel</div>
+
+    <div class="question">
+      <p>1. Déploiement progressif de l'AIDC</p>
+      <div class="scale">
+        <label><input type="radio" name="cns_aidc" value="1"> <span>1</span></label>
+        <label><input type="radio" name="cns_aidc" value="2"> <span>2</span></label>
+        <label><input type="radio" name="cns_aidc" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>2. Réseau ATN/IPS (migration IP interconnexion ATS)</p>
+      <div class="scale">
+        <label><input type="radio" name="cns_atn" value="1"> <span>1</span></label>
+        <label><input type="radio" name="cns_atn" value="2"> <span>2</span></label>
+        <label><input type="radio" name="cns_atn" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>3. STCA (Short Term Conflict Alert)</p>
+      <div class="scale">
+        <label><input type="radio" name="cns_stca" value="1"> <span>1</span></label>
+        <label><input type="radio" name="cns_stca" value="2"> <span>2</span></label>
+        <label><input type="radio" name="cns_stca" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>4. SWIM (System Wide Information Management)</p>
+      <div class="scale">
+        <label><input type="radio" name="cns_swim" value="1"> <span>1</span></label>
+        <label><input type="radio" name="cns_swim" value="2"> <span>2</span></label>
+        <label><input type="radio" name="cns_swim" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>5. Existe-t-il une feuille de route stratégique formalisée pour le TBO à l'ASECNA ?</p>
+      <div class="options-group" id="cns_roadmap">
+        <div class="option-item" data-value="Oui">Oui</div>
+        <div class="option-item" data-value="Partiellement">Partiellement</div>
+        <div class="option-item" data-value="Non">Non</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>6. À quel point êtes-vous familier avec le concept TBO (Trajectory-Based Operations) ?</p>
+      <div class="options-group" id="cns_familiarite">
+        <div class="option-item" data-value="Très familier">Très familier</div>
+        <div class="option-item" data-value="Assez familier">Assez familier</div>
+        <div class="option-item" data-value="Peu familier">Peu familier</div>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <button class="back-btn" onclick="showSection('accueil')">← Retour</button>
+      <button class="submit-btn" onclick="submitQuestionnaire('CNS')">Soumettre le questionnaire</button>
+    </div>
+  </div>
+
+  <!-- SECTION PILOTE -->
+  <div class="container hidden" id="sectionPilote">
+    <h1>Questionnaire Pilote <span class="function-badge">PILOTE</span></h1>
+    <div class="likert-info">Échelle : 1 = Non implémenté | 2 = En cours | 3 = Implémenté et opérationnel</div>
+
+    <div class="question">
+      <p>1. Expérience professionnelle dans le domaine aéronautique :</p>
+      <div class="options-group" id="pilote_experience">
+        <div class="option-item" data-value="Moins de 5 ans">Moins de 5 ans</div>
+        <div class="option-item" data-value="5 à 10 ans">5 à 10 ans</div>
+        <div class="option-item" data-value="11 à 20 ans">11 à 20 ans</div>
+        <div class="option-item" data-value="Plus de 20 ans">Plus de 20 ans</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>2. À quel point êtes-vous familier avec le concept TBO (Trajectory-Based Operations) ?</p>
+      <div class="options-group" id="pilote_familiarite">
+        <div class="option-item" data-value="Très familier">Très familier</div>
+        <div class="option-item" data-value="Assez familier">Assez familier</div>
+        <div class="option-item" data-value="Peu familier">Peu familier</div>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>3. Niveau d'implémentation du FF-ICE</p>
+      <div class="scale">
+        <label><input type="radio" name="pilote_ffice" value="1"> <span>1</span></label>
+        <label><input type="radio" name="pilote_ffice" value="2"> <span>2</span></label>
+        <label><input type="radio" name="pilote_ffice" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>4. Free Route Airspace (FRA)</p>
+      <div class="scale">
+        <label><input type="radio" name="pilote_fra" value="1"> <span>1</span></label>
+        <label><input type="radio" name="pilote_fra" value="2"> <span>2</span></label>
+        <label><input type="radio" name="pilote_fra" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>5. Utilisation des heures cibles</p>
+      <div class="scale">
+        <label><input type="radio" name="pilote_heures_cibles" value="1"> <span>1</span></label>
+        <label><input type="radio" name="pilote_heures_cibles" value="2"> <span>2</span></label>
+        <label><input type="radio" name="pilote_heures_cibles" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>6. Procédures CDO/CCO basiques</p>
+      <div class="scale">
+        <label><input type="radio" name="pilote_cdcco_basique" value="1"> <span>1</span></label>
+        <label><input type="radio" name="pilote_cdcco_basique" value="2"> <span>2</span></label>
+        <label><input type="radio" name="pilote_cdcco_basique" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>7. Procédures CDO/CCO avancées</p>
+      <div class="scale">
+        <label><input type="radio" name="pilote_cdcco_avance" value="1"> <span>1</span></label>
+        <label><input type="radio" name="pilote_cdcco_avance" value="2"> <span>2</span></label>
+        <label><input type="radio" name="pilote_cdcco_avance" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>8. Approches PBN avancées (RNP AR)</p>
+      <div class="scale">
+        <label><input type="radio" name="pilote_pbn_avance" value="1"> <span>1</span></label>
+        <label><input type="radio" name="pilote_pbn_avance" value="2"> <span>2</span></label>
+        <label><input type="radio" name="pilote_pbn_avance" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>9. Partage de trajectoire 4D (TBO avancé)</p>
+      <div class="scale">
+        <label><input type="radio" name="pilote_trajectoire_4d" value="1"> <span>1</span></label>
+        <label><input type="radio" name="pilote_trajectoire_4d" value="2"> <span>2</span></label>
+        <label><input type="radio" name="pilote_trajectoire_4d" value="3"> <span>3</span></label>
+      </div>
+    </div>
+
+    <div class="navigation">
+      <button class="back-btn" onclick="showSection('accueil')">← Retour</button>
+      <button class="submit-btn" onclick="submitQuestionnaire('Pilote')">Soumettre le questionnaire</button>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const ADMIN_PASSWORD = "ASECNA2024"; // Mot de passe administrateur
+
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAdminStats();
+      initializeOptions();
+      setupEventListeners();
+    });
+
+    function setupEventListeners() {
+      const paysSelect = document.getElementById('pays');
+      const fonctionSelect = document.getElementById('fonction');
+      const startBtn = document.getElementById('startBtn');
+
+      // Activer/désactiver le bouton start
+      function updateStartButton() {
+        startBtn.disabled = !paysSelect.value || !fonctionSelect.value;
+      }
+
+      paysSelect.addEventListener('change', updateStartButton);
+      fonctionSelect.addEventListener('change', updateStartButton);
+
+      // Gestion du démarrage
+      startBtn.addEventListener('click', () => {
+        const pays = paysSelect.value;
+        const fonction = fonctionSelect.value;
+
+        if (!pays || !fonction) {
+          alert("Veuillez sélectionner votre pays et votre fonction avant de continuer.");
+          return;
+        }
+
+        // Rediriger vers la section correspondante
+        showSection('section' + fonction);
+      });
+    }
+
+    // Gestion des options de sélection
+    function initializeOptions() {
+      document.querySelectorAll('.options-group').forEach(group => {
+        const options = group.querySelectorAll('.option-item');
+        
+        options.forEach(option => {
+          option.addEventListener('click', function() {
+            options.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            autoSave();
+          });
+        });
+      });
+    }
+
+    // Navigation entre sections
+    function showSection(sectionId) {
+      document.querySelectorAll('.container').forEach(section => {
+        section.classList.add('hidden');
+      });
+      document.getElementById(sectionId).classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    // Gestion du panel administrateur
+    function showAdminPanel() {
+      document.getElementById('adminPanel').classList.remove('hidden');
+      document.getElementById('adminControls').classList.add('hidden');
+      document.getElementById('passwordPrompt').classList.remove('hidden');
+      document.getElementById('adminPassword').value = '';
+    }
+
+    function hideAdminPanel() {
+      document.getElementById('adminPanel').classList.add('hidden');
+    }
+
+    // Sauvegarde automatique des réponses
+    function autoSave() {
+      const pays = document.getElementById('pays').value;
+      const fonction = document.getElementById('fonction').value;
+      
+      if (!pays || !fonction) return;
+
+      const responses = collectResponses();
+      const saveData = {
+        timestamp: new Date().toISOString(),
+        pays: pays,
+        fonction: fonction,
+        responses: responses
+      };
+
+      let allResponses = JSON.parse(localStorage.getItem('asecna_responses') || '[]');
+      
+      // Vérifier si une réponse existe déjà pour cette session
+      const existingIndex = allResponses.findIndex(r => 
+        r.pays === pays && r.fonction === fonction && !r.submitted
+      );
+      
+      if (existingIndex !== -1) {
+        allResponses[existingIndex] = saveData;
+      } else {
+        allResponses.push(saveData);
+      }
+      
+      localStorage.setItem('asecna_responses', JSON.stringify(allResponses));
+      updateAdminStats();
+    }
+
+    // Collecte de toutes les réponses
+    function collectResponses() {
+      const responses = {};
+      
+      // Collecte des réponses radio
+      const radioInputs = document.querySelectorAll('input[type="radio"]:checked');
+      radioInputs.forEach(input => {
+        responses[input.name] = input.value;
+      });
+      
+      // Collecte des options sélectionnées
+      document.querySelectorAll('.options-group').forEach(group => {
+        const selectedOption = group.querySelector('.option-item.selected');
+        if (selectedOption) {
+          const groupId = group.id;
+          responses[groupId] = selectedOption.getAttribute('data-value');
+        }
+      });
+      
+      return responses;
+    }
+
+    // Événement de sauvegarde automatique
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', autoSave);
+    });
+
+    // Soumission finale
+    function submitQuestionnaire(fonction) {
+      autoSave(); // Dernière sauvegarde
+      
+      // Marquer comme soumis
+      let allResponses = JSON.parse(localStorage.getItem('asecna_responses') || '[]');
+      const currentResponse = allResponses.find(r => 
+        r.pays === document.getElementById('pays').value && 
+        r.fonction === fonction && 
+        !r.submitted
+      );
+      
+      if (currentResponse) {
+        currentResponse.submitted = true;
+        currentResponse.submissionTime = new Date().toISOString();
+        localStorage.setItem('asecna_responses', JSON.stringify(allResponses));
+      }
+      
+      alert('Questionnaire soumis avec succès ! Vos réponses ont été sauvegardées.');
+      showSection('accueil');
+      
+      // Réinitialisation
+      document.getElementById('pays').value = '';
+      document.getElementById('fonction').value = '';
+      document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.checked = false;
+      });
+      document.querySelectorAll('.option-item').forEach(option => {
+        option.classList.remove('selected');
+      });
+    }
+
+    // === FONCTIONS D'ADMINISTRATION PROTÉGÉES ===
+
+    function checkAdminPassword() {
+      const password = document.getElementById('adminPassword').value;
+      if (password === ADMIN_PASSWORD) {
+        document.getElementById('passwordPrompt').classList.add('hidden');
+        document.getElementById('adminControls').classList.remove('hidden');
+        document.getElementById('adminPassword').value = '';
+      } else {
+        alert('❌ Mot de passe incorrect');
+        document.getElementById('adminPassword').value = '';
+      }
+    }
+
+    function updateAdminStats() {
+      const allResponses = JSON.parse(localStorage.getItem('asecna_responses') || '[]');
+      const statsText = document.getElementById('statsText');
+      
+      if (allResponses.length === 0) {
+        statsText.textContent = 'Aucune réponse enregistrée';
+        return;
+      }
+      
+      const submitted = allResponses.filter(r => r.submitted).length;
+      const stats = {
+        total: allResponses.length,
+        submitted: submitted,
+        byFunction: {}
+      };
+      
+      allResponses.forEach(response => {
+        stats.byFunction[response.fonction] = (stats.byFunction[response.fonction] || 0) + 1;
+      });
+      
+      let statsHTML = `${stats.total} réponse(s) total (${stats.submitted} soumises) - `;
+      statsHTML += Object.entries(stats.byFunction).map(([func, count]) => 
+        `${func}: ${count}`
+      ).join(' - ');
+      
+      statsText.textContent = statsHTML;
+    }
+
+    function downloadResponses() {
+      const allResponses = JSON.parse(localStorage.getItem('asecna_responses') || '[]');
+      
+      if (allResponses.length === 0) {
+        alert('Aucune réponse à télécharger');
+        return;
+      }
+      
+      let csv = 'Date,Pays,Fonction,Soumis';
+      
+      // En-têtes des questions (basé sur la première réponse)
+      if (allResponses.length > 0) {
+        Object.keys(allResponses[0].responses).forEach(question => {
+          csv += `,"${question}"`;
+        });
+      }
+      csv += '\n';
+      
+      // Données
+      allResponses.forEach(response => {
+        csv += `"${new Date(response.timestamp).toLocaleString()}","${response.pays}","${response.fonction}","${response.submitted ? 'Oui' : 'Non'}"`;
+        Object.values(response.responses).forEach(value => {
+          csv += `,"${value}"`;
+        });
+        csv += '\n';
+      });
+      
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `questionnaire_asecna_${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function downloadJSON() {
+      const allResponses = JSON.parse(localStorage.getItem('asecna_responses') || '[]');
+      
+      if (allResponses.length === 0) {
+        alert('Aucune réponse à télécharger');
+        return;
+      }
+      
+      const jsonData = JSON.stringify(allResponses, null, 2);
+      const blob = new Blob([jsonData], { type: 'application/json;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `questionnaire_asecna_${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function clearResponses() {
+      if (confirm('Êtes-vous sûr de vouloir effacer TOUTES les réponses ? Cette action est irréversible.')) {
+        localStorage.removeItem('asecna_responses');
+        updateAdminStats();
+        alert('Toutes les réponses ont été effacées.');
+      }
+    }
+  </script>
+</body>
+</html>
