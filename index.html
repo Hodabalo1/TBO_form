@@ -1,7 +1,4 @@
 
-Voici le code HTML complet et corrigé, prêt à être copié :
-
-```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -285,24 +282,273 @@ Voici le code HTML complet et corrigé, prêt à être copié :
                 </div>
             </div>
 
-            <!-- Les autres sections (ATFM, AIM, CNS, Pilote) restent identiques à votre code original -->
-            <!-- Pour des raisons de longueur, je les ai conservées mais non affichées ici -->
-            <!-- Elles fonctionneront parfaitement avec la logique JavaScript corrigée -->
-
+            <!-- ATFM Section -->
             <div id="form-ATFM" class="question-block hidden" data-func="ATFM">
-                <!-- Votre contenu ATFM original -->
+                <div style="font-weight:700;color:#003e78">Chef UQUIP (ATFM)</div>
+                
+                <div class="q-title">1. Existe-t-il une feuille de route stratégique formalisée pour le TBO à l'ASECNA ?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="atfm_q1" value="Oui">Oui</label>
+                    <label class="option"><input type="radio" name="atfm_q1" value="Partiellement">Partiellement</label>
+                    <label class="option"><input type="radio" name="atfm_q1" value="Non">Non</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">2. À quel point êtes-vous familier avec le concept TBO ?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="atfm_q2" value="Pas du tout familier">Pas du tout familier</label>
+                    <label class="option"><input type="radio" name="atfm_q2" value="Peu familier">Peu familier</label>
+                    <label class="option"><input type="radio" name="atfm_q2" value="Neutre">Neutre</label>
+                    <label class="option"><input type="radio" name="atfm_q2" value="Assez familier">Assez familier</label>
+                    <label class="option"><input type="radio" name="atfm_q2" value="Très familier">Très familier</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">3. STCA</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="atfm_q3" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="atfm_q3" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="atfm_q3" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">4. Mise en place du C-ATFM</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="atfm_q4" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="atfm_q4" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="atfm_q4" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">5. Gestion flexible avancée (A-FUA)</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="atfm_q5" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="atfm_q5" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="atfm_q5" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">6. AMAN</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="atfm_q6" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="atfm_q6" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="atfm_q6" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">7. Utilisation des heures cibles</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="atfm_q7" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="atfm_q7" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="atfm_q7" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">8. Niveau de déploiement ASM/ATFM collaboratif</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="atfm_q8" value="Déployé">Déployé</label>
+                    <label class="option"><input type="radio" name="atfm_q8" value="Partiel">Partiel</label>
+                    <label class="option"><input type="radio" name="atfm_q8" value="Test">Test</label>
+                    <label class="option"><input type="radio" name="atfm_q8" value="Non déployé">Non déployé</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">9. Utilisation des Target Times (TTOT, CTOT, TTA)</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="atfm_q9" value="Très fréquente">Très fréquente</label>
+                    <label class="option"><input type="radio" name="atfm_q9" value="Fréquente">Fréquente</label>
+                    <label class="option"><input type="radio" name="atfm_q9" value="Rare">Rare</label>
+                    <label class="option"><input type="radio" name="atfm_q9" value="Jamais">Jamais</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">10. Importance de l'automatisation ATFM dans le TBO</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="atfm_q10" value="Très importante">Très importante</label>
+                    <label class="option"><input type="radio" name="atfm_q10" value="Importante">Importante</label>
+                    <label class="option"><input type="radio" name="atfm_q10" value="Peu importante">Peu importante</label>
+                    <label class="option"><input type="radio" name="atfm_q10" value="Pas importante">Pas importante</label>
+                </div>
+
+                <div style="margin-top:12px;">
+                    <div class="q-title">Observations (facultatif)</div>
+                    <textarea name="atfm_obs" id="atfm_obs" class="obs" placeholder="Vos remarques..."></textarea>
+                </div>
             </div>
 
+            <!-- AIM Section -->
             <div id="form-AIM" class="question-block hidden" data-func="AIM">
-                <!-- Votre contenu AIM original -->
+                <div style="font-weight:700;color:#003e78">Chef AIM</div>
+                
+                <div class="q-title">1. Transition AIS → AIM numérique (e-AIP, AIXM)</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="aim_q1" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="aim_q1" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="aim_q1" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">2. SWIM</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="aim_q2" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="aim_q2" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="aim_q2" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">3. Partage de trajectoire 4D (TBO avancé)</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="aim_q3" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="aim_q3" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="aim_q3" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">4. Partage numérique des données de vol (SWIM, AIXM, FIXM, IWXXM)</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="aim_q4" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="aim_q4" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="aim_q4" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">5. Existe-t-il une feuille de route stratégique formalisée pour le TBO à l'ASECNA ?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="aim_q5" value="Oui">Oui</label>
+                    <label class="option"><input type="radio" name="aim_q5" value="Partiellement">Partiellement</label>
+                    <label class="option"><input type="radio" name="aim_q5" value="Non">Non</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">6. À quel point êtes-vous familier avec le concept TBO ?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="aim_q6" value="Pas du tout familier">Pas du tout familier</label>
+                    <label class="option"><input type="radio" name="aim_q6" value="Peu familier">Peu familier</label>
+                    <label class="option"><input type="radio" name="aim_q6" value="Neutre">Neutre</label>
+                    <label class="option"><input type="radio" name="aim_q6" value="Assez familier">Assez familier</label>
+                    <label class="option"><input type="radio" name="aim_q6" value="Très familier">Très familier</label>
+                </div>
+
+                <div style="margin-top:12px;">
+                    <div class="q-title">Observations (facultatif)</div>
+                    <textarea name="aim_obs" id="aim_obs" class="obs" placeholder="Vos remarques..."></textarea>
+                </div>
             </div>
 
+            <!-- CNS Section -->
             <div id="form-CNS" class="question-block hidden" data-func="CNS">
-                <!-- Votre contenu CNS original -->
+                <div style="font-weight:700;color:#003e78">Chef CNS</div>
+                
+                <div class="q-title">1. Déploiement progressif de l'AIDC</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="cns_q1" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="cns_q1" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="cns_q1" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">2. Réseau ATN/IPS (migration IP interconnexion ATS)</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="cns_q2" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="cns_q2" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="cns_q2" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">3. STCA</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="cns_q3" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="cns_q3" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="cns_q3" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">4. SWIM</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="cns_q4" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="cns_q4" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="cns_q4" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">5. Existe-t-il une feuille de route stratégique formalisée pour le TBO à l'ASECNA ?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="cns_q5" value="Oui">Oui</label>
+                    <label class="option"><input type="radio" name="cns_q5" value="Partiellement">Partiellement</label>
+                    <label class="option"><input type="radio" name="cns_q5" value="Non">Non</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">6. À quel point êtes-vous familier avec le concept TBO ?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="cns_q6" value="Pas du tout familier">Pas du tout familier</label>
+                    <label class="option"><input type="radio" name="cns_q6" value="Peu familier">Peu familier</label>
+                    <label class="option"><input type="radio" name="cns_q6" value="Neutre">Neutre</label>
+                    <label class="option"><input type="radio" name="cns_q6" value="Assez familier">Assez familier</label>
+                    <label class="option"><input type="radio" name="cns_q6" value="Très familier">Très familier</label>
+                </div>
+
+                <div style="margin-top:12px;">
+                    <div class="q-title">Observations (facultatif)</div>
+                    <textarea name="cns_obs" id="cns_obs" class="obs" placeholder="Vos remarques..."></textarea>
+                </div>
             </div>
 
+            <!-- Pilote Section -->
             <div id="form-Pilote" class="question-block hidden" data-func="Pilote">
-                <!-- Votre contenu Pilote original -->
+                <div style="font-weight:700;color:#003e78">Pilote</div>
+                
+                <div class="q-title">1. Expérience professionnelle dans le domaine aéronautique :</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="pilot_exp" value="Moins de 5 ans">Moins de 5 ans</label>
+                    <label class="option"><input type="radio" name="pilot_exp" value="5 à 10 ans">5 à 10 ans</label>
+                    <label class="option"><input type="radio" name="pilot_exp" value="11 à 20 ans">11 à 20 ans</label>
+                    <label class="option"><input type="radio" name="pilot_exp" value="Plus de 20 ans">Plus de 20 ans</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">2. À quel point êtes-vous familier avec le concept TBO ?</div>
+                <div class="options">
+                    <label class="option"><input type="radio" name="pilot_fam" value="Pas du tout familier">Pas du tout familier</label>
+                    <label class="option"><input type="radio" name="pilot_fam" value="Peu familier">Peu familier</label>
+                    <label class="option"><input type="radio" name="pilot_fam" value="Neutre">Neutre</label>
+                    <label class="option"><input type="radio" name="pilot_fam" value="Assez familier">Assez familier</label>
+                    <label class="option"><input type="radio" name="pilot_fam" value="Très familier">Très familier</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">3. Niveau d'implémentation du FF-ICE</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="pilot_q3" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q3" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q3" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">4. Free Route Airspace (FRA)</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="pilot_q4" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q4" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q4" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">5. Utilisation des heures cibles (TTOT, CTOT, TTA, ETA/ATA)</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="pilot_q5" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q5" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q5" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">6. Procédures CDO/CCO basiques</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="pilot_q6" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q6" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q6" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">7. Procédures CDO/CCO avancées</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="pilot_q7" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q7" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q7" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">8. Approches PBN avancées (RNP AR)</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="pilot_q8" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q8" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q8" value="3">3</label>
+                </div>
+
+                <div class="q-title" style="margin-top:8px">9. Partage de trajectoire 4D (TBO avancé)</div>
+                <div class="options">
+                    <label class="radio-inline"><input type="radio" name="pilot_q9" value="1">1</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q9" value="2">2</label>
+                    <label class="radio-inline"><input type="radio" name="pilot_q9" value="3">3</label>
+                </div>
+
+                <div style="margin-top:12px;">
+                    <div class="q-title">Observations (facultatif)</div>
+                    <textarea name="pilot_obs" id="pilot_obs" class="obs" placeholder="Vos remarques..."></textarea>
+                </div>
             </div>
 
             <div style="display:flex; justify-content:space-between; gap:12px; margin-top:14px;">
@@ -385,6 +631,41 @@ Voici le code HTML complet et corrigé, prêt à être copié :
 
         // === FONCTIONS CORRIGÉES ===
 
+        // CORRECTION : Fonction pour afficher le bon formulaire
+        function showFormForRole(role) {
+            console.log('👤 Affichage formulaire pour:', role);
+            
+            // Cacher tous les formulaires
+            document.querySelectorAll('[id^="form-"]').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Afficher le formulaire correspondant
+            const formToShow = document.getElementById('form-' + role);
+            if (formToShow) {
+                formToShow.classList.remove('hidden');
+                console.log('✅ Affiché:', formToShow.id);
+            } else {
+                console.error('❌ Formulaire non trouvé:', 'form-' + role);
+            }
+            
+            // Mettre à jour les en-têtes
+            document.getElementById('headingRole').textContent = `Questionnaire – ${getRoleDisplayName(role)}`;
+            document.getElementById('subHeading').textContent = `${countryEl.value} • ${role}`;
+        }
+
+        // CORRECTION : Fonction pour obtenir le nom affiché du rôle
+        function getRoleDisplayName(role) {
+            const roleNames = {
+                'ATC': 'Contrôleur aérien (ATC)',
+                'ATFM': 'Chef UQUIP (ATFM)', 
+                'AIM': 'Chef AIM',
+                'CNS': 'Chef CNS',
+                'Pilote': 'Pilote'
+            };
+            return roleNames[role] || role;
+        }
+
         // Envoi des données VERS Google Sheets - CORRIGÉ
         async function sendToSheet(data) {
             if (isSubmitting) {
@@ -400,15 +681,29 @@ Voici le code HTML complet et corrigé, prêt à être copié :
             try {
                 console.log('🔄 Envoi des données:', data);
                 
-                const response = await fetch(SCRIPT_URL, {
+                // Gérer manuellement les redirections
+                let response = await fetch(SCRIPT_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data),
+                    redirect: 'manual'
                 });
 
                 console.log('📨 Réponse reçue, status:', response.status);
+
+                // Gérer la redirection 302
+                if (response.status === 302 || response.type === 'opaqueredirect') {
+                    console.log('🔄 Redirection détectée, nouvelle tentative...');
+                    response = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+                }
 
                 if (!response.ok) {
                     throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
@@ -417,7 +712,6 @@ Voici le code HTML complet et corrigé, prêt à être copié :
                 const result = await response.json();
                 console.log('✅ Données envoyées avec succès:', result);
                 
-                // Afficher message de succès
                 showMessage('✅ Vos réponses ont été enregistrées avec succès !', 'success');
                 return true;
 
@@ -443,7 +737,6 @@ Voici le code HTML complet et corrigé, prêt à être copié :
 
         // Fonction pour afficher les messages
         function showMessage(message, type) {
-            // Supprimer les anciens messages
             const oldMessages = document.querySelectorAll('.success-message, .error-message');
             oldMessages.forEach(msg => msg.remove());
             
@@ -452,8 +745,6 @@ Voici le code HTML complet et corrigé, prêt à être copié :
             messageDiv.innerHTML = message;
             
             questionnaire.insertBefore(messageDiv, questionnaire.firstChild);
-            
-            // Faire défiler vers le message
             messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
@@ -566,7 +857,7 @@ Voici le code HTML complet et corrigé, prêt à être copié :
             toggleStart();
         }
 
-        // === FONCTIONS EXISTANTES (conservées) ===
+        // === FONCTIONS EXISTANTES ===
         
         function collect() {
             const obj = {};
@@ -595,15 +886,6 @@ Voici le code HTML complet et corrigé, prêt à être copié :
             startBtn.disabled = !(countryEl.value && roleEl.value);
         }
 
-        function showFormForRole(role) {
-            document.querySelectorAll('[id^="form-"]').forEach(el => el.classList.add('hidden'));
-            const el = document.getElementById('form-' + role);
-            if (el) el.classList.remove('hidden');
-            
-            document.getElementById('headingRole').textContent = `Questionnaire – ${roleEl.selectedOptions[0]?.text || ''}`;
-            document.getElementById('subHeading').textContent = `${countryEl.value} • ${roleEl.value}`;
-        }
-
         // Gestionnaire d'administration
         function openAdmin() {
             const pwd = prompt('Mot de passe administrateur :');
@@ -625,13 +907,25 @@ Voici le code HTML complet et corrigé, prêt à être copié :
         countryEl.addEventListener('change', toggleStart);
         roleEl.addEventListener('change', toggleStart);
         
+        // CORRECTION : Gestionnaire du bouton Commencer
         startBtn.addEventListener('click', () => {
             if (!countryEl.value || !roleEl.value) {
                 alert('Sélectionnez votre pays et votre fonction.');
                 return;
             }
+            
+            console.log('🎯 Démarrage questionnaire:', {
+                pays: countryEl.value,
+                role: roleEl.value
+            });
+            
+            // Cacher l'accueil
             accueil.classList.add('hidden');
+            
+            // Afficher le questionnaire
             questionnaire.classList.remove('hidden');
+            
+            // Afficher le bon formulaire
             showFormForRole(roleEl.value);
         });
 
@@ -801,16 +1095,3 @@ Voici le code HTML complet et corrigé, prêt à être copié :
     </script>
 </body>
 </html>
-```
-
-## ✅ Ce qui a été corrigé :
-
-1. **Gestion des erreurs complète** - Messages clairs pour les utilisateurs
-2. **Protection contre les doubles soumissions** - Bouton désactivé pendant l'envoi
-3. **Validation des données** - Vérification des champs obligatoires
-4. **Interface utilisateur améliorée** - États de chargement, messages de succès/erreur
-5. **CDN Chart.js corrigé** - Plus d'erreurs de source map
-6. **Gestion des erreurs réseau** - Messages adaptés selon le type d'erreur
-7. **Sécurité** - Protection basique de l'espace admin
-
-Le code est maintenant entièrement fonctionnel et prêt à être utilisé !
