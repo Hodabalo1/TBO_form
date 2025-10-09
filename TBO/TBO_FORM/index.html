@@ -667,73 +667,81 @@
         }
 
         // Envoi des données VERS Google Sheets - CORRIGÉ
-        async function sendToSheet(data) {
-            if (isSubmitting) {
-                console.log('⏳ Soumission déjà en cours...');
-                return false;
-            }
+        // ENVOI DES DONNÉES - VERSION COMPLÈTEMENT CORRIGÉE
+async function sendToSheet(data) {
+  if (isSubmitting) {
+    console.log('⏳ Soumission déjà en cours...');
+    return false;
+  }
 
-            isSubmitting = true;
-            btnSubmit.disabled = true;
-            btnSubmit.textContent = 'Envoi en cours...';
-            btnSubmit.classList.add('loading');
-            
-            try {
-                console.log('🔄 Envoi des données:', data);
-                
-                // Gérer manuellement les redirections
-                let response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8',
-                    },
-                    body: JSON.stringify(data),
-                    redirect: 'manual'
-                });
+  isSubmitting = true;
+  btnSubmit.disabled = true;
+  btnSubmit.textContent = 'Envoi en cours...';
+  btnSubmit.classList.add('loading');
+  
+  try {
+    console.log('🔄 Tentative d\'envoi des données:', data);
 
-                console.log('📨 Réponse reçue, status:', response.status);
+    // 🔥 CORRECTION : Utilisation de redirect: "follow" pour mobile
+    const response = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8',
+      },
+      body: JSON.stringify(data),
+      redirect: 'follow' // 🔥 ESSENTIEL pour mobile
+    });
 
-                // Gérer la redirection 302
-                if (response.status === 302 || response.type === 'opaqueredirect') {
-                    console.log('🔄 Redirection détectée, nouvelle tentative...');
-                    response = await fetch(SCRIPT_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(data)
-                    });
-                }
+    console.log('📨 Statut de la réponse:', response.status, response.ok);
 
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
-                }
+    if (!response.ok) {
+      throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
+    }
 
-                const result = await response.json();
-                console.log('✅ Données envoyées avec succès:', result);
-                
-                showMessage('✅ Vos réponses ont été enregistrées avec succès !', 'success');
-                return true;
+    const result = await response.text();
+    console.log('✅ Réponse brute du serveur:', result);
 
-            } catch (error) {
-                console.error('🚨 Erreur lors de l\'envoi:', error);
-                
-                let errorMessage = "Erreur d'envoi. ";
-                if (error.name === 'TypeError' && error.message.includes('fetch')) {
-                    errorMessage += "Problème de connexion Internet. Vérifiez votre connexion et réessayez.";
-                } else {
-                    errorMessage += `Détails: ${error.message}`;
-                }
-                
-                showMessage(errorMessage, 'error');
-                return false;
-            } finally {
-                isSubmitting = false;
-                btnSubmit.disabled = false;
-                btnSubmit.textContent = 'Soumettre';
-                btnSubmit.classList.remove('loading');
-            }
-        }
+    let parsedResult;
+    try {
+      parsedResult = JSON.parse(result);
+    } catch (parseError) {
+      console.error('❌ Impossible de parser la réponse JSON:', parseError);
+      throw new Error('Réponse invalide du serveur');
+    }
+
+    console.log('📦 Réponse parsée:', parsedResult);
+
+    if (parsedResult.status === 'success') {
+      showMessage('✅ Vos réponses ont été enregistrées avec succès !', 'success');
+      return true;
+    } else {
+      throw new Error(parsedResult.message || 'Erreur inconnue du serveur');
+    }
+
+  } catch (error) {
+    console.error('🚨 Erreur lors de l\'envoi:', error);
+    
+    // Messages d'erreur plus précis
+    let errorMessage = "Erreur d'envoi. ";
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      errorMessage += "Problème de connexion. Vérifiez votre connexion Internet.";
+    } else if (error.message.includes('Failed to fetch')) {
+      errorMessage += "Impossible de contacter le serveur. Vérifiez votre connexion.";
+    } else if (error.message.includes('HTTP error')) {
+      errorMessage += `Erreur serveur (${error.message}). Réessayez plus tard.`;
+    } else {
+      errorMessage += `Détails: ${error.message}`;
+    }
+    
+    showMessage(errorMessage, 'error');
+    return false;
+  } finally {
+    isSubmitting = false;
+    btnSubmit.disabled = false;
+    btnSubmit.textContent = 'Soumettre';
+    btnSubmit.classList.remove('loading');
+  }
+}
 
         // Fonction pour afficher les messages
         function showMessage(message, type) {
