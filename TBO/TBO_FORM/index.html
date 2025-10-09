@@ -667,7 +667,7 @@
         }
 
         // Envoi des données VERS Google Sheets - CORRIGÉ
-        // ENVOI DES DONNÉES - VERSION COMPLÈTEMENT CORRIGÉE
+        // ENVOI DES DONNÉES - VERSION PROXY POUR GITHUB PAGES
 async function sendToSheet(data) {
   if (isSubmitting) {
     console.log('⏳ Soumission déjà en cours...');
@@ -682,40 +682,16 @@ async function sendToSheet(data) {
   try {
     console.log('🔄 Tentative d\'envoi des données:', data);
 
-    // 🔥 CORRECTION : Utilisation de redirect: "follow" pour mobile
-    const response = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain;charset=utf-8',
-      },
-      body: JSON.stringify(data),
-      redirect: 'follow' // 🔥 ESSENTIEL pour mobile
-    });
+    // 🔥 NOUVELLE MÉTHODE : Utilisation d'un proxy via iframe
+    const result = await sendViaProxy(data);
+    
+    console.log('📦 Réponse parsée:', result);
 
-    console.log('📨 Statut de la réponse:', response.status, response.ok);
-
-    if (!response.ok) {
-      throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
-    }
-
-    const result = await response.text();
-    console.log('✅ Réponse brute du serveur:', result);
-
-    let parsedResult;
-    try {
-      parsedResult = JSON.parse(result);
-    } catch (parseError) {
-      console.error('❌ Impossible de parser la réponse JSON:', parseError);
-      throw new Error('Réponse invalide du serveur');
-    }
-
-    console.log('📦 Réponse parsée:', parsedResult);
-
-    if (parsedResult.status === 'success') {
+    if (result.status === 'success') {
       showMessage('✅ Vos réponses ont été enregistrées avec succès !', 'success');
       return true;
     } else {
-      throw new Error(parsedResult.message || 'Erreur inconnue du serveur');
+      throw new Error(result.message || 'Erreur inconnue du serveur');
     }
 
   } catch (error) {
@@ -729,6 +705,8 @@ async function sendToSheet(data) {
       errorMessage += "Impossible de contacter le serveur. Vérifiez votre connexion.";
     } else if (error.message.includes('HTTP error')) {
       errorMessage += `Erreur serveur (${error.message}). Réessayez plus tard.`;
+    } else if (error.message.includes('CSP')) {
+      errorMessage += "Problème de sécurité. Réessayez ou contactez l'administrateur.";
     } else {
       errorMessage += `Détails: ${error.message}`;
     }
@@ -743,6 +721,61 @@ async function sendToSheet(data) {
   }
 }
 
+// 🔥 NOUVELLE FONCTION : Envoi via proxy pour contourner CSP
+function sendViaProxy(data) {
+  return new Promise((resolve, reject) => {
+    // Créer un iframe temporaire pour le proxy
+    const proxyFrame = document.createElement('iframe');
+    proxyFrame.style.display = 'none';
+    proxyFrame.sandbox = "allow-scripts"; // Sécurité
+    
+    // Préparer les données pour le proxy
+    const targetUrl = encodeURIComponent(SCRIPT_URL);
+    const postData = encodeURIComponent(JSON.stringify(data));
+    
+    // Charger une page HTML locale comme proxy
+    proxyFrame.src = `proxy.html?url=${targetUrl}&data=${postData}`;
+    
+    // Écouter les messages du proxy
+    const messageHandler = (event) => {
+      if (event.data.type === 'PROXY_SUCCESS') {
+        console.log('✅ Réponse reçue via proxy:', event.data.result);
+        // Nettoyer
+        document.body.removeChild(proxyFrame);
+        window.removeEventListener('message', messageHandler);
+        // Parser la réponse
+        try {
+          const parsed = JSON.parse(event.data.result);
+          resolve(parsed);
+        } catch (e) {
+          reject(new Error('Réponse invalide du serveur'));
+        }
+      } else if (event.data.type === 'PROXY_ERROR') {
+        console.error('❌ Erreur proxy:', event.data.error);
+        // Nettoyer
+        document.body.removeChild(proxyFrame);
+        window.removeEventListener('message', messageHandler);
+        reject(new Error(event.data.error || 'Erreur de proxy'));
+      }
+    };
+    
+    window.addEventListener('message', messageHandler);
+    
+    // Gestion du timeout
+    const timeout = setTimeout(() => {
+      document.body.removeChild(proxyFrame);
+      window.removeEventListener('message', messageHandler);
+      reject(new Error('Timeout - Pas de réponse du serveur'));
+    }, 15000); // 15 secondes timeout
+    
+    // Démarrer le processus
+    proxyFrame.onload = () => {
+      clearTimeout(timeout);
+    };
+    
+    document.body.appendChild(proxyFrame);
+  });
+}
         // Fonction pour afficher les messages
         function showMessage(message, type) {
             const oldMessages = document.querySelectorAll('.success-message, .error-message');

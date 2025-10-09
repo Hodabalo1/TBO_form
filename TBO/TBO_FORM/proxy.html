@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proxy CORS</title>
+</head>
+<body>
+    <script>
+        // Proxy pour contourner la CSP GitHub Pages
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetUrl = decodeURIComponent(urlParams.get('url'));
+            const postData = decodeURIComponent(urlParams.get('data'));
+            
+            console.log('🔗 Proxy: Envoi vers', targetUrl);
+            
+            if (targetUrl && postData) {
+                fetch(targetUrl, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'text/plain;charset=utf-8' 
+                    },
+                    body: postData,
+                    redirect: 'follow'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(result => {
+                    // Envoyer le résultat au parent
+                    window.parent.postMessage({ 
+                        type: 'PROXY_SUCCESS', 
+                        result: result 
+                    }, '*');
+                })
+                .catch(error => {
+                    // Envoyer l'erreur au parent
+                    window.parent.postMessage({ 
+                        type: 'PROXY_ERROR', 
+                        error: error.toString() 
+                    }, '*');
+                });
+            } else {
+                throw new Error('Paramètres manquants');
+            }
+        } catch (error) {
+            window.parent.postMessage({ 
+                type: 'PROXY_ERROR', 
+                error: error.toString() 
+            }, '*');
+        }
+    </script>
+</body>
+</html>
